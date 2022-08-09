@@ -17,3 +17,22 @@
     /* 以下代表白色透明度为0.3 */
     background: rgba(255,255,255,.5);
 }
+
+
+/* 头图透明    自行修改
+#page-header{
+    background: transparent!important;
+  }
+  
+  #page-header::before{
+    opacity: 0;
+  }
+  */
+  /* footer透明 */
+  #footer{
+    background: transparent!important;
+  }
+  
+  #footer::before{
+    opacity: 0;
+  }
