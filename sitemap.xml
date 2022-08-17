@@ -239,6 +239,13 @@
   </url>
   
   <url>
+    <loc>http://chalnl.com/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</loc>
+    <lastmod>2022-08-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://chalnl.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/</loc>
     <lastmod>2022-08-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -260,7 +267,7 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</loc>
+    <loc>http://chalnl.com/tags/XSS/</loc>
     <lastmod>2022-08-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -268,13 +275,6 @@
   
   <url>
     <loc>http://chalnl.com/tags/%E7%88%86%E7%A0%B4%E7%AB%AF%E5%8F%A3/</loc>
-    <lastmod>2022-08-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://chalnl.com/tags/XSS/</loc>
     <lastmod>2022-08-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
