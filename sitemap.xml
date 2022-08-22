@@ -252,6 +252,13 @@
   </url>
   
   <url>
+    <loc>http://chalnl.com/tags/Hexo/</loc>
+    <lastmod>2022-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://chalnl.com/tags/Markdown/</loc>
     <lastmod>2022-08-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -273,6 +280,13 @@
   </url>
   
   <url>
+    <loc>http://chalnl.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/</loc>
+    <lastmod>2022-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</loc>
     <lastmod>2022-08-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -287,28 +301,7 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/</loc>
-    <lastmod>2022-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://chalnl.com/tags/Hexo/</loc>
-    <lastmod>2022-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://chalnl.com/tags/%E7%88%86%E7%A0%B4%E7%AB%AF%E5%8F%A3/</loc>
-    <lastmod>2022-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://chalnl.com/tags/%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2022-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -323,6 +316,13 @@
   
   <url>
     <loc>http://chalnl.com/tags/XSS/</loc>
+    <lastmod>2022-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://chalnl.com/tags/%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2022-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
