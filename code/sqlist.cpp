@@ -79,6 +79,14 @@ int main(){
         ListInsert_Sq(L, i, elem);
     }
     printList(L);
+
+    printf("\nPlease input the position to insert:\n");
+    scanf("%d", &i);
+    printf("Please input the elements:\n");
+    scanf("%d", &e);
+    ListInsert_Sq(L, i, e);
+    printList(L);
+
     printf("\nPlease input the length to delete the size of sqlist:\n");
     scanf("%d", &a);
     printf("Please input the place to deldte size:\n");
