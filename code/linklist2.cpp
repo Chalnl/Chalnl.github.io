@@ -48,7 +48,7 @@ int main() {
 	for (int i = 1; i <= 10; ++i) {
 		//printf("%d ", p -> elem);
 		if (p->elem == 0)
-			printf("兔子可能藏在%d号洞\n", i);
+			printf("The rabbit could in %d\n", i);
 		p = p->next;
 	}
 	return 0;
