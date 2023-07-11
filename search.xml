@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Linux-常用文件管理命令</title>
+      <link href="/post/4806ba3e.html/"/>
+      <url>/post/4806ba3e.html/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="文件管理命令"><a href="#文件管理命令" class="headerlink" title="文件管理命令"></a>文件管理命令</h1><h2 id="1-概论"><a href="#1-概论" class="headerlink" title="1. 概论"></a>1. 概论</h2><p>(1).目标: 锻炼动手能力。学完以后可以做出什么项目。</p><p>(2). 什么是  <strong>Linux，Ubuntu</strong></p><p>(3). 未来工作方式，<strong>Terminal</strong>，命令行交互方式</p><h2 id="2-文件系统"><a href="#2-文件系统" class="headerlink" title="2. 文件系统"></a>2. 文件系统</h2><h3 id="1-文件系统结构"><a href="#1-文件系统结构" class="headerlink" title="(1). 文件系统结构"></a>(1). 文件系统结构</h3><p><img src="https://www.runoob.com/wp-content/uploads/2014/06/4_20.png" alt="img"></p><p><strong>树状目录结构：</strong></p><p><img src="https://www.runoob.com/wp-content/uploads/2014/06/d0c50-linux2bfile2bsystem2bhierarchy.jpg" alt="img"></p><div class="tabs" id=""><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#-1">bin</button></li><li class="tab"><button type="button" data-href="#-2">boot</button></li><li class="tab"><button type="button" data-href="#-3">dev</button></li><li class="tab"><button type="button" data-href="#-4">etc</button></li><li class="tab"><button type="button" data-href="#-5">home</button></li><li class="tab"><button type="button" data-href="#-6">lib</button></li><li class="tab"><button type="button" data-href="#-7">proc</button></li><li class="tab"><button type="button" data-href="#-8">root</button></li><li class="tab"><button type="button" data-href="#-9">tmp</button></li><li class="tab"><button type="button" data-href="#-10">usr</button></li><li class="tab"><button type="button" data-href="#-11">var</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="-1"><ul><li><strong>/bin</strong>：<br>bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。</li></ul><blockquote><p><strong>/bin, /sbin, /usr/bin, /usr/sbin</strong>: 这是系统预设的执行文件的放置目录，比如 <strong>ls</strong> 就是在 <strong>/bin/ls</strong> 目录下的。</p><p><strong>/bin</strong>、<strong>/usr/bin</strong> 是给系统用户使用的指令（除 root 外的通用用户），而/sbin, /usr/sbin 则是给 root 使用的指令。</p></blockquote><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-2"><ul><li><strong>/boot：</strong><br>这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-3"><ul><li><strong>/dev ：</strong><br>dev 是 Device(设备) 的缩写, 该目录下存放的是 Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-4"><ul><li><strong>/etc：</strong><br>etc 是 Etcetera(等等) 的缩写,这个目录用来存放所有的系统管理所需要的配置文件和子目录。如果更改了该目录下的某个文件可能会导致系统不能启动。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-5"><ul><li><strong>/home</strong>：<br>用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的，如上图中的 alice、bob 和 eve。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-6"><ul><li><strong>/lib</strong>：<br>lib 是 Library(库) 的缩写这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件。几乎所有的应用程序都需要用到这些共享库。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-7"><ul><li><p><strong>/proc</strong>：<br>proc 是 Processes(进程) 的缩写，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。<br>这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/net/i</span>pv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure></li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-8"><ul><li><strong>/root</strong>：<br>该目录为系统管理员，也称作超级权限者的用户主目录。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-9"><ul><li><strong>/tmp</strong>：<br>tmp 是 temporary(临时) 的缩写这个目录是用来存放一些临时文件的。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-10"><ul><li><p><strong>/usr</strong>：<br> usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。</p></li><li><p><strong>/usr/bin：</strong><br>系统用户使用的应用程序。</p></li><li><strong>/usr/sbin：</strong><br>超级用户使用的比较高级的管理程序和系统守护程序。</li><li><strong>/usr/src：</strong><br>内核源代码默认的放置目录。</li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="-11"><ul><li><strong>/var</strong>：<br>var 是 variable(变量) 的缩写，这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。<blockquote><p>这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 /var/log 目录下，另外 mail 的预设放置也是在这里。</p></blockquote></li></ul><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></div><h3 id="2-路径"><a href="#2-路径" class="headerlink" title="(2). 路径"></a>(2). 路径</h3><ul><li><p><strong>a. 绝对路径:</strong> 从根目录<code>/</code>开始描述的路径，<code>pwd</code> 输出的是绝对路径</p></li><li><p><strong>b. 相对路径:</strong> 相对路径是某个从某 文件到达另一个文件的路径</p></li><li><p><strong>c. 根目录</strong></p></li></ul><blockquote><p><code>.</code>  表示当前目录<br><code>..</code> 表示上一个目录<br><code>~/</code> 表示家目录</p></blockquote><h2 id="3-文件管理常用指令"><a href="#3-文件管理常用指令" class="headerlink" title="3. 文件管理常用指令"></a>3. 文件管理常用指令</h2><ul><li><strong>ls</strong>（英文全拼：list files）: 列出目录及文件名</li><li><strong>cd</strong>（英文全拼：change directory）：切换目录</li><li><strong>pwd</strong>（英文全拼：print work directory）：显示目前的目录</li><li><strong>mkdir</strong>（英文全拼：make directory）：创建一个新的目录</li><li><strong>rmdir</strong>（英文全拼：remove directory）：删除一个空的目录</li><li><strong>cp</strong>（英文全拼：copy file）: 复制文件或目录</li><li><strong>rm</strong>（英文全拼：remove）: 删除文件或目录</li><li><strong>mv</strong>（英文全拼：move file）: 移动文件与目录，或修改文件与目录的名称</li></ul><blockquote><p><code>Crtl+C</code> ：向当前命令传一个终止命令 ，结束命令 换一行<br><code>Crtl+U</code> ：清空本行</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux 基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux 基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据结构之二叉树 - BiTree</title>
       <link href="/post/a4f04391.html/"/>
       <url>/post/a4f04391.html/</url>
@@ -21,12 +46,6 @@
         <tags>
             
             <tag> 数据结构 </tag>
-            
-            <tag> 二叉树 </tag>
-            
-            <tag> C语言 </tag>
-            
-            <tag> 加密文章 </tag>
             
         </tags>
       
@@ -53,10 +72,6 @@
             
             <tag> 数据结构 </tag>
             
-            <tag> C语言 </tag>
-            
-            <tag> 队列 </tag>
-            
         </tags>
       
     </entry>
@@ -81,10 +96,6 @@
         <tags>
             
             <tag> 数据结构 </tag>
-            
-            <tag> C语言 </tag>
-            
-            <tag> 栈 </tag>
             
         </tags>
       
@@ -111,10 +122,6 @@
             
             <tag> 数据结构 </tag>
             
-            <tag> C语言 </tag>
-            
-            <tag> 线性表 </tag>
-            
         </tags>
       
     </entry>
@@ -139,10 +146,6 @@
         <tags>
             
             <tag> 数据结构 </tag>
-            
-            <tag> C语言 </tag>
-            
-            <tag> 线性表 </tag>
             
         </tags>
       
@@ -169,9 +172,9 @@
             
             <tag> 网络安全 </tag>
             
-            <tag> 命令注入 </tag>
-            
             <tag> 加密内容 </tag>
+            
+            <tag> 命令注入 </tag>
             
         </tags>
       
@@ -341,9 +344,9 @@
             
             <tag> 网络安全 </tag>
             
-            <tag> 漏洞挖掘 </tag>
-            
             <tag> 密码爆破 </tag>
+            
+            <tag> 漏洞挖掘 </tag>
             
         </tags>
       
@@ -369,8 +372,6 @@
         <tags>
             
             <tag> 网络安全 </tag>
-            
-            <tag> 漏洞挖掘 </tag>
             
         </tags>
       
@@ -503,7 +504,7 @@
     
     
     <entry>
-      <title>QQ机器人（暂不开放）</title>
+      <title>QQ机器人</title>
       <link href="/post/28.html/"/>
       <url>/post/28.html/</url>
       
