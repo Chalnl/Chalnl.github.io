@@ -351,13 +351,6 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E5%8A%A0%E5%AF%86%E6%96%87%E7%AB%A0/</loc>
-    <lastmod>2023-07-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://chalnl.com/tags/Linuxchalnl-%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -366,6 +359,13 @@
   
   <url>
     <loc>http://chalnl.com/tags/Linux-%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://chalnl.com/tags/%E5%8A%A0%E5%AF%86%E6%96%87%E7%AB%A0/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -400,13 +400,6 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</loc>
-    <lastmod>2023-07-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://chalnl.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -414,14 +407,21 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E7%88%86%E7%A0%B4%E7%AB%AF%E5%8F%A3/</loc>
+    <loc>http://chalnl.com/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    <loc>http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://chalnl.com/tags/%E7%88%86%E7%A0%B4%E7%AB%AF%E5%8F%A3/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
