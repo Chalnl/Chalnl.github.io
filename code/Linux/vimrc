@@ -1,0 +1,18 @@
+ cursorline      //显示当前横线
+set cursorcoiumn //显示当前竖线
+set mouse=a      //设置在vim中可以 使用鼠标
+set number       //显示当前行号
+set ruler        //显示当前列号
+set showcmd      //在状态栏显示正在输入的命令
+set showmode     //左下角显示当前vim模式
+set tabstop=4    //设置tab宽度
+set shiftwidth=4 //设置自动对齐空格数
+set softtabstop=4//安退格键时可以一次删除4个空格
+set smarttab     //使用Backspace直接删除tab
+set guioptions-=b//添加水平滚动条
+set lines=35     //设置视屏行数为35
+set columns=99   //设置竖直列数为99
+
+//自动补齐括号
+inoremap ( ()i
+inoremap [ []i
