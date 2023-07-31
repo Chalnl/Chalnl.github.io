@@ -322,9 +322,9 @@
             
             <tag> 网络安全 </tag>
             
-            <tag> 加密内容 </tag>
-            
             <tag> 命令注入 </tag>
+            
+            <tag> 加密内容 </tag>
             
         </tags>
       
@@ -494,9 +494,9 @@
             
             <tag> 网络安全 </tag>
             
-            <tag> 漏洞挖掘 </tag>
-            
             <tag> 密码爆破 </tag>
+            
+            <tag> 漏洞挖掘 </tag>
             
         </tags>
       
