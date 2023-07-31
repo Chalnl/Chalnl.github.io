@@ -477,9 +477,9 @@
     
     <category term="网络安全" scheme="http://chalnl.com/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
-    <category term="密码爆破" scheme="http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/"/>
-    
     <category term="漏洞挖掘" scheme="http://chalnl.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
+    
+    <category term="密码爆破" scheme="http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/"/>
     
   </entry>
   
