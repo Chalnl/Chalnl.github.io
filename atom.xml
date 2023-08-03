@@ -325,9 +325,9 @@
     
     <category term="网络安全" scheme="http://chalnl.com/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
-    <category term="命令注入" scheme="http://chalnl.com/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/"/>
-    
     <category term="加密内容" scheme="http://chalnl.com/tags/%E5%8A%A0%E5%AF%86%E5%86%85%E5%AE%B9/"/>
+    
+    <category term="命令注入" scheme="http://chalnl.com/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
