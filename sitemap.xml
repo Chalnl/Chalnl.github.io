@@ -434,21 +434,14 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</loc>
-    <lastmod>2023-08-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://chalnl.com/tags/%E7%88%86%E7%A0%B4%E7%AB%AF%E5%8F%A3/</loc>
-    <lastmod>2023-08-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</loc>
+    <lastmod>2023-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://chalnl.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</loc>
     <lastmod>2023-08-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -462,6 +455,13 @@
   </url>
   
   <url>
+    <loc>http://chalnl.com/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/</loc>
+    <lastmod>2023-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://chalnl.com/tags/%E5%8A%A0%E5%AF%86%E5%86%85%E5%AE%B9/</loc>
     <lastmod>2023-08-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -469,7 +469,7 @@
   </url>
   
   <url>
-    <loc>http://chalnl.com/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/</loc>
+    <loc>http://chalnl.com/tags/%E7%88%86%E7%A0%B4%E7%AB%AF%E5%8F%A3/</loc>
     <lastmod>2023-08-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

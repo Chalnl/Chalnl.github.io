@@ -351,9 +351,9 @@
     
     <category term="网络安全" scheme="http://chalnl.com/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
-    <category term="加密内容" scheme="http://chalnl.com/tags/%E5%8A%A0%E5%AF%86%E5%86%85%E5%AE%B9/"/>
-    
     <category term="命令注入" scheme="http://chalnl.com/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/"/>
+    
+    <category term="加密内容" scheme="http://chalnl.com/tags/%E5%8A%A0%E5%AF%86%E5%86%85%E5%AE%B9/"/>
     
   </entry>
   
@@ -505,9 +505,9 @@
     
     <category term="网络安全" scheme="http://chalnl.com/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
-    <category term="漏洞挖掘" scheme="http://chalnl.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
-    
     <category term="密码爆破" scheme="http://chalnl.com/tags/%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/"/>
+    
+    <category term="漏洞挖掘" scheme="http://chalnl.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
     
   </entry>
   
